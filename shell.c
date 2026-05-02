@@ -41,6 +41,16 @@ int lsh_cd(char **args){
   return 1;
 };
 
+int lsh_help(char **args){
+  int i;
+  printf("Type program names and arguments, and hit enter.\n");
+  printf("The following are built in:\n");
+
+  for(int i; i < lsh_num_builtins(); i++){
+    printf(" %s\n",builtin_str[i]);
+  };
+};
+
 int lsh_launch(char **args)
 {
   pid_t pid, wpid;
