@@ -55,6 +55,26 @@ int lsh_exit(char **args){
   return 0;
 }
 
+int lsh_execute(char **args){
+  int i;
+  
+  if (args[0] == NULL)
+  {
+    return 1;
+  }
+  
+  for (int i; i < lsh_num_builtins(); i++)
+  {
+    if (strcmp(args[0], builtin_str[i]) == 0)
+    {
+      return lsh_launch(args);
+    }
+    
+  }
+  
+
+}
+
 int lsh_launch(char **args)
 {
   pid_t pid, wpid;
