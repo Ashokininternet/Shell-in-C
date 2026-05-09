@@ -11,6 +11,7 @@ int ash_help(char **args);
 int ash_exit(char **args);
 int ash_ls(char **args);
 int ash_rm(char **args);
+int ash_make(char **args);
 int ash_num_builtins(void);
 
 extern char *builtin_str[];

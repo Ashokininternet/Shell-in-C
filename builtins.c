@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <utime.h>
 #include "ash.h"
 
-char *builtin_str[] = { "cd", "help", "exit", "ls", "rm" };
+char *builtin_str[] = { "cd", "help", "exit", "ls", "rm", "make"};
 
 int (*builtin_func[])(char **) = {
     &ash_cd,
@@ -12,6 +15,7 @@ int (*builtin_func[])(char **) = {
     &ash_exit,
     &ash_ls,
     &ash_rm,
+    &ash_make
 };
 
 int ash_num_builtins(void) {
@@ -60,6 +64,26 @@ int ash_rm(char **args) {
         fprintf(stderr, "ash: expected argument to \"rm\"\n");
     } else if (unlink(args[1]) != 0) {
         perror("ash");
+    }
+    return 1;
+}
+int ash_make(char **args) {
+    if (args[1] == NULL) {
+        fprintf(stderr, "ash: expected argument to \"touch\"\n");
+        return 1;
+    }
+
+    for (int i = 1; args[i] != NULL; i++) {
+        int fd = open(args[i], O_WRONLY | O_CREAT, 0644);
+        if (fd == -1) {
+            perror("ash: touch");
+            continue;
+        }
+        close(fd);
+
+        if (utime(args[i], NULL) != 0) {
+            perror("ash: touch");
+        }
     }
     return 1;
 }
