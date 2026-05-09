@@ -16,7 +16,7 @@ A basic Unix shell implementation written in C. This project demonstrates how a 
 ## Building the Project
 To compile the shell using the provided Makefile:
 ```bash
-gcc -o "filename" shell.c
+make
 ```
 ## Note
 This shell is still in building phase.More commands and stuff will be added later on.

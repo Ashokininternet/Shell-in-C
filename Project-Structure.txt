@@ -1,0 +1,7 @@
+ash/
+├── main.c
+├── ash.h          ← declarations for everything
+├── builtins.c     ← cd, help, exit, ls, rm
+├── core.c         ← ash_launch, ash_execute, ash_loop
+├── utils.c        ← ash_read_line, ash_split_line
+└── Makefile
