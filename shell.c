@@ -3,6 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <dirent.h>
+
 
 #define ASH_RL_BUFSIZE 1024
 #define ASH_TOK_BUFSIZE 64
@@ -11,18 +13,20 @@
 int ash_exit(char **args);
 int ash_cd(char **args);
 int ash_help(char **args);
-
+int ash_ls(char **args);
 
 char *builtin_str[] = {
   "cd",
   "help",
-  "exit"
+  "exit",
+  "ls"
 };
 
 int (*builtin_func[]) (char **) = {
   &ash_cd,
   &ash_help,
-  &ash_exit
+  &ash_exit,
+  &ash_ls
 };
 
 int ash_num_builtins(){
@@ -53,6 +57,30 @@ int ash_help(char **args){
 
 int ash_exit(char **args){
   return 0;
+}
+
+int ash_ls(char **args) {
+    struct dirent *de;
+    DIR *dr;
+
+    char *path = (args[1] == NULL) ? "." : args[1];
+
+    dr = opendir(path);
+
+    if (dr == NULL) {
+        perror("ash");
+        return 1;
+    }
+
+    while ((de = readdir(dr)) != NULL) {
+        if (de->d_name[0] != '.') {
+            printf("%s  ", de->d_name);
+        }
+    }
+
+    printf("\n");
+    closedir(dr);
+    return 1;
 }
 
 int ash_launch(char **args)
