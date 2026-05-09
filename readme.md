@@ -8,6 +8,8 @@ A basic Unix shell implementation written in C. This project demonstrates how a 
   * `help` - Display information about the shell.
   * `exit` - Terminate the shell session.
   * `ls` - Lists the files/folders in the current working directory.
+  * `rm` - Removes the selected file/folder .
+
 
 ## Prerequisites
 * A C compiler (e.g., `gcc`)
