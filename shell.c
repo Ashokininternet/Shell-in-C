@@ -8,9 +8,10 @@
 #define ASH_TOK_BUFSIZE 64
 #define ASH_TOK_DELIM " \t\r\n\a"
 
+int ash_exit(char **args);
 int ash_cd(char **args);
 int ash_help(char **args);
-int ash_exit(char **atgs);
+
 
 char *builtin_str[] = {
   "cd",
@@ -42,11 +43,10 @@ int ash_cd(char **args){
 };
 
 int ash_help(char **args){
-  int i;
   printf("Type program names and arguments, and hit enter.\n");
   printf("The following are built in:\n");
-
-  for(int i; i < ash_num_builtins(); i++){
+  int i;
+  for(int i = 0; i < ash_num_builtins(); i++){
     printf(" %s\n",builtin_str[i]);
   };
 };
@@ -148,24 +148,18 @@ char *ash_read_line(void)
   }
 }
 
-int ash_execute(char **args){
-  int i;
-  
-  if (args[0] == NULL)
-  {
+int ash_execute(char **args)
+{
+  if (args[0] == NULL) {
     return 1;
   }
-  
-  for (int i; i < ash_num_builtins(); i++)
-  {
-    if (strcmp(args[0], builtin_str[i]) == 0)
-    {
-      return ash_launch(args);
-    }
-    
-  }
-  
 
+  for (int i = 0; i < ash_num_builtins(); i++) {
+    if (strcmp(args[0], builtin_str[i]) == 0) {
+      return (*builtin_func[i])(args);
+    }
+  }
+  return ash_launch(args);
 }
 
 void ash_loop(void)
