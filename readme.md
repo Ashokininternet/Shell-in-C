@@ -31,4 +31,4 @@ make clean
 ```
 
 ## Status
-Under active development. More commands will be added.
+Under development. More commands will be added.
