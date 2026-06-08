@@ -46,9 +46,14 @@ void ash_loop(void)
     char *line;
     char **args;
     int status;
+    char cwd[ASH_PATH_MAX];
     do
     {
-        printf("ash -> ");
+        if (getcwd(cwd, sizeof(cwd)) != NULL)
+            printf("ash:~ %s -> ", cwd);
+        else
+            printf("ash ? -> ");
+
         line = ash_read_line();
         args = ash_split_line(line);
         status = ash_execute(args);
