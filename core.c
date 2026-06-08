@@ -50,7 +50,7 @@ void ash_loop(void)
     do
     {
         if (getcwd(cwd, sizeof(cwd)) != NULL)
-            printf("ash:~ %s -> ", cwd);
+            printf("ash:- %s -> ", cwd);
         else
             printf("ash ? -> ");
 
